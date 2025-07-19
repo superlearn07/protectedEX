@@ -1,0 +1,20 @@
+Clone the repo
+
+Extract the ZIP to a known folder on your computer.
+(You should see files like manifest.json, popup.html, popup.js, style.css, etc.)
+
+Open Chrome’s Extensions Page
+
+In Chrome, navigate to "chrome://extensions/".
+
+Toggle Developer mode on (top-right corner).
+
+Load the Extension(top-left corner).
+
+Click Load unpacked.
+
+Select the folder where you extracted the extension files.
+
+The VaultText icon should now appear in your Chrome toolbar.
+
+voila!
