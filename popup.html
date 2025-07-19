@@ -1,0 +1,36 @@
+<!-- popup.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>protectedEX</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+    <div class="card">
+<h2 style="text-align: center;">protectedEX</h2>
+
+  <textarea id="note" placeholder="Enter your text here..."></textarea>
+  <input type="password" id="password" placeholder="Master password"/>
+
+  <div class="button-row">
+    <button id="saveBtn">Save the text</button>
+    <button id="loadBtn">Load</button>
+   <button id="clearBtn">Clear the selection</button>
+     <button id="connectBtn">Connect Your Wallet</button> 
+
+
+  </div>
+<label>
+  <input type="checkbox" id="sessionOnly">
+  🕓 Session-only note (will be lost after browser is closed)
+</label>
+
+
+  <p id="status"></p>
+
+  <script src="popup.js"></script>
+</body>
+</html>

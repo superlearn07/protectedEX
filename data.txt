@@ -1,0 +1,42 @@
+how will it work-
+The encryption happens inside your browser.
+The password never leaves your device.
+Only the scrambled (encrypted) text is stored or sent.
+So even the server (or in our extension’s case, your local storage) never sees your real text or password.
+There is no account tied to you.
+No email, no user ID.
+Just open the app, type, encrypt, save.
+Close the tab, and your data is safe because the encryption key (your password) only lives in your head.
+If you can read the code, you can verify that:
+It really encrypts on your device.
+It doesn’t secretly upload passwords.
+This is why people say “you don’t have to trust us—read the code yourself.”
+
+
+
+Because you encrypt everything before it’s saved, and your password never leaves your browser, no one—not even you without the password—can read your data.
+
+
+Dual-key mode (advanced):
+Require both password + wallet signature
+
+
+
+
+
+
+When you save a note, we will:
+
+Take the text you typed.
+
+Take your password.
+
+Derive a strong encryption key from the password using PBKDF2 (a secure key derivation function).
+
+Use AES-GCM encryption to encrypt the text.
+
+Store:
+the ciphertext,
+the salt (used for deriving the key),
+the IV (initialization vector for AES-GCM)
+in chrome.storage.local.
