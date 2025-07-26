@@ -8,6 +8,64 @@ window.addEventListener('DOMContentLoaded', () => {
   const clearBtn = document.getElementById('clearBtn');
   const statusEl = document.getElementById('status');
   const sessionOnlyEl = document.getElementById('sessionOnly');
+const exportBtn = document.getElementById('exportBtn');
+const importBtn = document.getElementById('importBtn');
+const importInput = document.getElementById('importInput');
+
+exportBtn.addEventListener('click', async () => {
+  // Check if user chose session-only or persistent
+  const sessionOnly = sessionOnlyEl.checked;
+  let vaultData;
+  if (sessionOnly) {
+    const raw = sessionStorage.getItem('vault');
+    vaultData = raw ? JSON.parse(raw) : null;
+  } else {
+    const result = await chrome.storage.local.get('vault');
+    vaultData = result.vault;
+  }
+  if (!vaultData) {
+    statusEl.textContent = "ℹ️ No encrypted note to export!";
+    triggerShake && triggerShake();
+    return;
+  }
+  const blob = new Blob([JSON.stringify(vaultData, null, 2)], {type: "application/json"});
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = "vaulttext-note.json";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+
+  statusEl.textContent = "✅ Encrypted note exported!";
+});
+
+importBtn.addEventListener('click', () => {
+  importInput.value = '';
+  importInput.click();
+});
+
+importInput.addEventListener('change', async (event) => {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = async function(e) {
+    try {
+      const vaultData = JSON.parse(e.target.result);
+      // Optionally, validate vaultData keys here
+      await chrome.storage.local.set({ vault: vaultData });
+      statusEl.textContent = "✅ Note imported!";
+      triggerShake && triggerShake();
+    } catch (err) {
+      statusEl.textContent = "❌ Failed to import (bad file?)";
+      triggerShake && triggerShake();
+    }
+  };
+  reader.readAsText(file);
+});
 
 
   saveBtn.addEventListener('click', async () => {
